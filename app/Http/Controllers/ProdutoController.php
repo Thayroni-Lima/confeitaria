@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use App\Models\Confeitaria;
-use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -116,6 +115,13 @@ class ProdutoController extends Controller
         ]);
     
         return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso!');
+    }
+
+    public function porConfeitaria(Confeitaria $confeitaria)
+    {
+        return Inertia::render('Produtos/Index', [
+            'produtos' => $confeitaria->produtos()->with('confeitaria')->get()
+        ]);
     }
         
 

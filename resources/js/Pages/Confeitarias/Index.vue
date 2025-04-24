@@ -16,6 +16,13 @@ const csrfToken = usePage().props.csrf_token;
     <div class="mt-4 space-y-2">
       <div v-for="confeitaria in confeitarias" :key="confeitaria.id" class="p-4 border rounded">
         <h2 class="text-lg font-semibold">{{ confeitaria.nome }}</h2>
+
+        <div class="flex justify-between items-center">
+          <Link :href="`/confeitarias/${confeitaria.id}/produtos`" class="text-sm bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700">
+            Ver Produtos
+          </Link>
+        </div>
+
         <p><strong>Telefone:</strong> {{ confeitaria.telefone }}</p>
         <p><strong>Endereço:</strong> {{ confeitaria.rua }}, {{ confeitaria.numero }} - {{ confeitaria.bairro }}, {{ confeitaria.cidade }} - {{ confeitaria.estado }}</p>
         <p><strong>Localização:</strong> Lat: {{ confeitaria.latitude }}, Long: {{ confeitaria.longitude }}</p>

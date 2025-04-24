@@ -25,6 +25,9 @@ Route::get('/dashboard', function () {
     return redirect('/confeitarias');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/confeitarias/{confeitaria}/produtos', [ProdutoController::class, 'porConfeitaria'])->name('confeitarias.produtos');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
