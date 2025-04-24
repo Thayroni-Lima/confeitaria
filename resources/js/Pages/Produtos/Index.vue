@@ -16,6 +16,15 @@ const csrfToken = usePage().props.csrf_token;
       Novo Produto
     </Link>
 
+    <Link href="/confeitarias" class="inline-flex items-center bg-purple-500 text-white px-4 py-2 rounded mb-4">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      Voltar para Confeitarias
+    </Link>
+
+
+
     <div class="mt-4 space-y-4">
       <div
         v-for="produto in produtos"

@@ -13,6 +13,14 @@ const csrfToken = usePage().props.csrf_token;
       Nova Confeitaria
     </Link>
 
+    <Link href="/produtos" class="inline-flex items-center bg-purple-500 text-white px-4 py-2 rounded mb-4">
+      Todos os Produtos
+    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+    </Link>
+
+
     <div class="mt-4 space-y-2">
       <div v-for="confeitaria in confeitarias" :key="confeitaria.id" class="p-4 border rounded">
         <h2 class="text-lg font-semibold">{{ confeitaria.nome }}</h2>
