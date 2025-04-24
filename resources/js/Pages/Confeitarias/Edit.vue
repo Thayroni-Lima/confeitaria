@@ -1,12 +1,14 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import { router } from '@inertiajs/vue3';
-defineProps({ confeitaria: Object });
 
-const form = useForm({ ...confeitaria });
+const props = defineProps({
+  confeitaria: Object
+});
+
+const form = useForm({ ...props.confeitaria });
 
 function submit() {
-  form.put(`/confeitarias/${confeitaria.id}`);
+  form.put(`/confeitarias/${props.confeitaria.id}`);
 }
 </script>
 
