@@ -4,6 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\ConfeitariaController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('confeitarias', ConfeitariaController::class);
+}); 
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -15,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return redirect('/confeitarias');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -23,5 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/confeitarias/{id}/edit', [ConfeitariaController::class, 'edit']);
+Route::put('/confeitarias/{id}', [ConfeitariaController::class, 'update']);
+
 
 require __DIR__.'/auth.php';
