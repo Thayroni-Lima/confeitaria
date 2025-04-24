@@ -64,6 +64,16 @@ onMounted(() => {
         <p><strong>Telefone:</strong> {{ confeitaria.telefone }}</p>
         <p><strong>Endereço:</strong> {{ confeitaria.rua }}, {{ confeitaria.numero }} - {{ confeitaria.bairro }}, {{ confeitaria.cidade }} - {{ confeitaria.estado }}</p>
         <p><strong>Localização:</strong> Lat: {{ confeitaria.latitude }}, Long: {{ confeitaria.longitude }}</p>
+
+        <div class="mt-2 space-x-4">
+          <Link :href="`/confeitarias/${confeitaria.id}/edit`" class="text-blue-600 underline">Editar</Link>
+
+          <form :action="`/confeitarias/${confeitaria.id}`" method="POST" class="inline-block">
+            <input type="hidden" name="_method" value="DELETE" />
+            <input type="hidden" name="_token" :value="csrfToken" />
+            <button type="submit" class="text-red-600 underline">Excluir</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
