@@ -28,8 +28,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/confeitarias/{confeitaria}/produtos', [ProdutoController::class, 'porConfeitaria'])->name('confeitarias.produtos');
 
-Route::get('/mapa', [MapaController::class, 'index'])->name('mapa');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

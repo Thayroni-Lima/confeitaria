@@ -3,10 +3,17 @@ import { onMounted } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import L from 'leaflet';
 
-defineProps({
-  confeitarias: Array
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
 });
 
+const { confeitarias } = defineProps({ confeitarias: Array });
 const csrfToken = usePage().props.csrf_token;
 
 onMounted(() => {
@@ -16,14 +23,14 @@ onMounted(() => {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  // Corrigir o bug de renderização (muito importante!)
-  setTimeout(() => {
-    map.invalidateSize();
-  }, 100);
+  setTimeout(() => map.invalidateSize(), 100);
 
   confeitarias.forEach(c => {
-    if (c.latitude && c.longitude) {
-      const marker = L.marker([c.latitude, c.longitude]).addTo(map);
+    const lat = parseFloat(c.latitude);
+    const lng = parseFloat(c.longitude);
+
+    if (!isNaN(lat) && !isNaN(lng)) {
+      const marker = L.marker([lat, lng]).addTo(map);
       marker.bindPopup(`
         <strong>${c.nome}</strong><br/>
         ${c.rua}, ${c.numero} - ${c.bairro}<br/>
@@ -33,8 +40,8 @@ onMounted(() => {
     }
   });
 });
-
 </script>
+
 
 <template>
   <div class="p-6">
@@ -46,7 +53,7 @@ onMounted(() => {
     </div>
 
     <!-- Mapa -->
-<div id="map" class="w-full h-[350px] rounded border shadow mb-6 z-0 relative"></div>
+    <div id="map" class="w-full h-[350px] rounded border shadow mb-6 relative z-0"></div>
 
     <!-- Lista de Confeitarias -->
     <div class="space-y-4">
