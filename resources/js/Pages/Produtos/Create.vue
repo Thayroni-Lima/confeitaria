@@ -7,11 +7,17 @@ const form = useForm({
   nome: '',
   valor: '',
   descricao: '',
-  imagem: '',
+  imagens: [],
 });
 
+function handleFiles(event) {
+  form.imagens = Array.from(event.target.files);
+}
+
 function submit() {
-  form.post('/produtos');
+  form.post('/produtos', {
+    forceFormData: true,
+  });
 }
 </script>
 
@@ -19,46 +25,25 @@ function submit() {
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">Novo Produto</h1>
 
-    <form @submit.prevent="submit" class="grid grid-cols-1 gap-4">
-
-      <label class="block">
+    <form @submit.prevent="submit" class="grid grid-cols-1 gap-4" enctype="multipart/form-data">
+      <label>
         Confeitaria
         <select v-model="form.confeitaria_id" class="border p-2 w-full">
           <option value="">Selecione...</option>
-          <option v-for="c in confeitarias" :key="c.id" :value="c.id">
-            {{ c.nome }}
-          </option>
+          <option v-for="c in confeitarias" :key="c.id" :value="c.id">{{ c.nome }}</option>
         </select>
-        <span v-if="form.errors.confeitaria_id" class="text-red-600 text-sm">{{ form.errors.confeitaria_id }}</span>
       </label>
 
-      <label class="block">
-        Nome
-        <input v-model="form.nome" placeholder="Nome do Produto" class="border p-2 w-full" />
-        <span v-if="form.errors.nome" class="text-red-600 text-sm">{{ form.errors.nome }}</span>
+      <input v-model="form.nome" placeholder="Nome do Produto" class="border p-2 w-full" />
+      <input v-model="form.valor" type="number" step="0.01" placeholder="R$ 0,00" class="border p-2 w-full" />
+      <textarea v-model="form.descricao" class="border p-2 w-full" placeholder="Descrição do produto"></textarea>
+
+      <label>
+        Imagens do Produto (múltiplas)
+        <input type="file" @change="handleFiles" multiple class="border p-2 w-full" />
       </label>
 
-      <label class="block">
-        Valor
-        <input v-model="form.valor" type="number" step="0.01" placeholder="R$ 0,00" class="border p-2 w-full" />
-        <span v-if="form.errors.valor" class="text-red-600 text-sm">{{ form.errors.valor }}</span>
-      </label>
-
-      <label class="block">
-        Descrição
-        <textarea v-model="form.descricao" class="border p-2 w-full" placeholder="Descrição do produto"></textarea>
-        <span v-if="form.errors.descricao" class="text-red-600 text-sm">{{ form.errors.descricao }}</span>
-      </label>
-
-      <label class="block">
-        Nome do Arquivo da Imagem (simples, por enquanto)
-        <input v-model="form.imagem" placeholder="imagem1.jpg" class="border p-2 w-full" />
-        <span v-if="form.errors.imagem" class="text-red-600 text-sm">{{ form.errors.imagem }}</span>
-      </label>
-
-      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">
-        Salvar Produto
-      </button>
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Salvar Produto</button>
     </form>
   </div>
 </template>

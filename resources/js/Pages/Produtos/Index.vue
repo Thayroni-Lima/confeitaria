@@ -1,9 +1,11 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 
 defineProps({
   produtos: Array
 });
+
+const csrfToken = usePage().props.csrf_token;
 </script>
 
 <template>
@@ -14,19 +16,33 @@ defineProps({
       Novo Produto
     </Link>
 
-    <div class="mt-4 space-y-2">
-      <div v-for="produto in produtos" :key="produto.id" class="p-4 border rounded">
+    <div class="mt-4 space-y-4">
+      <div
+        v-for="produto in produtos"
+        :key="produto.id"
+        class="p-4 border rounded shadow-sm"
+      >
         <h2 class="text-lg font-semibold">{{ produto.nome }}</h2>
         <p><strong>Valor:</strong> R$ {{ parseFloat(produto.valor).toFixed(2) }}</p>
         <p><strong>Descrição:</strong> {{ produto.descricao || '---' }}</p>
         <p><strong>Confeitaria:</strong> {{ produto.confeitaria?.nome }}</p>
-        <p><strong>Imagem:</strong> {{ produto.imagem || 'Sem imagem' }}</p>
 
-        <div class="mt-2 space-x-4">
+        <div v-if="produto.imagem && produto.imagem.length" class="mt-2 flex gap-2">
+          <img
+            v-for="(img, index) in produto.imagem"
+            :key="index"
+            :src="`/storage/${img}`"
+            alt="Imagem do produto"
+            class="h-20 w-20 object-cover border rounded"
+          />
+        </div>
+
+        <div class="mt-3 space-x-4">
           <Link :href="`/produtos/${produto.id}/edit`" class="text-blue-600 underline">Editar</Link>
+
           <form :action="`/produtos/${produto.id}`" method="POST" class="inline-block" @submit.prevent="() => $refs[`form_${produto.id}`].submit()" :ref="`form_${produto.id}`">
             <input type="hidden" name="_method" value="DELETE" />
-            <input type="hidden" name="_token" :value="$page.props.csrf_token" />
+            <input type="hidden" name="_token" :value="csrfToken" />
             <button type="submit" class="text-red-600 underline">Excluir</button>
           </form>
         </div>

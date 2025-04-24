@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nome');
             $table->decimal('valor', 8, 2);
             $table->text('descricao')->nullable();
-            $table->string('imagem')->nullable(); // path da imagem por enquanto
+            $table->json('imagem')->nullable(); // path da imagem por enquanto
             $table->timestamps();
         });
     }

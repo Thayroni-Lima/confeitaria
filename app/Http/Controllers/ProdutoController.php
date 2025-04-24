@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use App\Models\Confeitaria;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -43,10 +44,23 @@ class ProdutoController extends Controller
             'nome' => 'required',
             'valor' => 'required|numeric',
             'descricao' => 'nullable|string',
-            'imagem' => 'nullable|string',
+            'imagens.*' => 'nullable|image|max:2048',
         ]);
     
-        Produto::create($request->all());
+        $paths = [];
+        if ($request->hasFile('imagens')) {
+            foreach ($request->file('imagens') as $image) {
+                $paths[] = $image->store('produtos', 'public');
+            }
+        }
+    
+        Produto::create([
+            'confeitaria_id' => $request->confeitaria_id,
+            'nome' => $request->nome,
+            'valor' => $request->valor,
+            'descricao' => $request->descricao,
+            'imagem' => $paths,
+        ]);
     
         return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso!');
     }
