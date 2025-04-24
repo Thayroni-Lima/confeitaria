@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\MapaController;
 
 use App\Http\Controllers\ConfeitariaController;
 use App\Http\Controllers\ProdutoController;
@@ -27,6 +28,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/confeitarias/{confeitaria}/produtos', [ProdutoController::class, 'porConfeitaria'])->name('confeitarias.produtos');
 
+Route::get('/mapa', [MapaController::class, 'index'])->name('mapa');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
