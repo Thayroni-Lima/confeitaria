@@ -13,7 +13,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('confeitarias', ConfeitariaController::class);
 });
 
-Route::get('/', function () {
+Route::get('/', function () {   
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),

@@ -45,11 +45,12 @@ const csrfToken = usePage().props.csrf_token;
         <div class="mt-3 space-x-4">
           <Link :href="`/produtos/${produto.id}/edit`" class="text-blue-600 underline">Editar</Link>
 
-          <form :action="`/produtos/${produto.id}`" method="POST" class="inline-block" @submit.prevent="() => $refs[`form_${produto.id}`].submit()" :ref="`form_${produto.id}`">
+          <form :action="`/produtos/${produto.id}`" method="POST" class="inline-block">
             <input type="hidden" name="_method" value="DELETE" />
             <input type="hidden" name="_token" :value="csrfToken" />
             <button type="submit" class="text-red-600 underline">Excluir</button>
           </form>
+
         </div>
       </div>
     </div>
