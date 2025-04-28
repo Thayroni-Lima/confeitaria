@@ -68,8 +68,6 @@ DB_PASSWORD=secret
 
 ## 🧪 Testes
 
-(Opcional: Se você implementou testes, adicione as instruções aqui.)
-
 ---
 
 ## 📂 Estrutura do Projeto
@@ -79,7 +77,7 @@ DB_PASSWORD=secret
 - `routes/web.php` – Definição das rotas do sistema  
 - `docker-compose.yml` – Configuração dos containers  
 - `entrypoint.sh` – Script de inicialização automática  
-- `.env.example` – Variáveis de ambiente base
+- `.env` – Variáveis de ambiente base
 
 ---
 
