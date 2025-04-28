@@ -64,11 +64,6 @@ DB_USERNAME=laravel
 DB_PASSWORD=secret
 ```
 
----
-
-## 🧪 Testes
-
----
 
 ## 📂 Estrutura do Projeto
 
